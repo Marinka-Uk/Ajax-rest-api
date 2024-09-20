@@ -5,6 +5,11 @@ const loagMoreBtnRef = document.querySelector('[data-action="load-more"]')
 const BASE_URL = 'https://newsapi.org/v2/everything/'
 const API_KEY = '3ce63eea477043d7a470d2b21dc5ab4b'
 
+
+formRef.addEventListener('submit', onSearch)
+loagMoreBtnRef.addEventListener('click', onLoadMore)
+
+
 const options = {
     headers: {
         'Authorization': API_KEY
@@ -12,9 +17,12 @@ const options = {
 
 }
 
+let page = 1;
+let searchQuery;
+console.log('page до сабміту', page);
 
 const searchArticles = query => {
-    return fetch(`${BASE_URL}?q=${query}&apiKey=${API_KEY}&pageSize=20&page=2`)
+    return fetch(`${BASE_URL}?q=${query}&pagesSize=20&page=${page}`, options)
     .then(response => response.json())
 }
 function createArticleCards(articles) {
@@ -38,10 +46,26 @@ function createArticleCards(articles) {
 formRef.addEventListener('submit', onSearch)
 function onSearch(event){
     event.preventDefault() 
-        searchArticles(event.currentTarget.elements.query.value)
+    searchQuery = event.currentTarget.elements.query.value
+        searchArticles(searchQuery)
     .then(res => res.articles)
     .then(articles => {
         const markup = createArticleCards(articles)
-        articlesContainerRef.innerHTML = markup
+        articlesContainerRef.insertAdjacentHTML('beforeend', markup)
+        page += 1;
+        console.log('page до сабміту', page);
     })
-    }
+    form.reset()
+}
+
+
+function onLoadMore() {
+   searchArticles(searchQuery)
+        .then(res => res.articles)
+        .then(articles => {
+            const markup = createArticleCards(articles)
+            articlesContainerRef.insertAdjacentHTML('beforeend', markup)
+            page += 1;
+
+        })
+}
