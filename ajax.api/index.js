@@ -1,30 +1,25 @@
+import { NewsApiService } from "./api-service";
+
 const formRef = document.querySelector('.js-search-form');
 const articlesContainerRef = document.querySelector('.js-articles-container');
 const loagMoreBtnRef = document.querySelector('[data-action="load-more"]')
 
-const BASE_URL = 'https://newsapi.org/v2/everything/'
-const API_KEY = '3ce63eea477043d7a470d2b21dc5ab4b'
 
+const newsApiService = new NewsApiService()
+console.log(newsApiService);
 
 formRef.addEventListener('submit', onSearch)
 loagMoreBtnRef.addEventListener('click', onLoadMore)
 
 
-const options = {
-    headers: {
-        'Authorization': API_KEY
-    },
-
-}
 
 let page = 1;
 let searchQuery;
+
+
 console.log('page до сабміту', page);
 
-const searchArticles = query => {
-    return fetch(`${BASE_URL}?q=${query}&pagesSize=20&page=${page}`, options)
-    .then(response => response.json())
-}
+
 function createArticleCards(articles) {
     return articles.map(article => {
         return `
@@ -46,13 +41,13 @@ function createArticleCards(articles) {
 formRef.addEventListener('submit', onSearch)
 function onSearch(event){
     event.preventDefault() 
-    searchQuery = event.currentTarget.elements.query.value
-        searchArticles(searchQuery)
+   newsApiService.searchQuery = event.currentTarget.elements.query.value
+       newsApiService.searchArticles()
     .then(res => res.articles)
     .then(articles => {
         const markup = createArticleCards(articles)
         articlesContainerRef.insertAdjacentHTML('beforeend', markup)
-        page += 1;
+        newsApiService.page += 1;
         console.log('page до сабміту', page);
     })
     form.reset()
@@ -60,12 +55,12 @@ function onSearch(event){
 
 
 function onLoadMore() {
-   searchArticles(searchQuery)
+    newsApiService.searchArticles()
         .then(res => res.articles)
         .then(articles => {
             const markup = createArticleCards(articles)
             articlesContainerRef.insertAdjacentHTML('beforeend', markup)
-            page += 1;
-
+            newsApiService.page += 1;
+            console.log('page до сабміту', page);
         })
 }
