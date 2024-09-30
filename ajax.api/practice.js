@@ -48,15 +48,15 @@
 //  виводить його як заголовок. Перепишіть функцію
 //  всіма відомими вам способами. 
  
-const input = document.getElementById('name')
-function yourNames() {
+// const input = document.getElementById('name')
+// function yourNames() {
     
-}
+// }
 
-input.addEventListener('input',() => {
-    const yourNames = document.getElementById('yourNames')
-    yourNames.textContent = input.value
-}) 
+// input.addEventListener('input',() => {
+//     const yourNames = document.getElementById('yourNames')
+//     yourNames.textContent = input.value
+// }) 
 
 
 
@@ -69,22 +69,18 @@ input.addEventListener('input',() => {
 
 
 
-const rewieew = {
-    < form >
-    
-    </form >
-}
-
-const refs = {
-  form: document.querySelector('.searcEm'),
-    btn: document.querySelector('.btnEm'),
-  email: document.querySelector('.emailForm')
-}
 
 
-const messEmail = document.getElementById()
+// const refs = {
+//   form: document.querySelector('.searcEm'),
+//     btn: document.querySelector('.btnEm'),
+//   email: document.querySelector('.emailForm')
+// }
 
 
-setTimeout(() => {
-    messEmail
-}, 1500)
+// const messEmail = document.getElementById()
+
+
+// setTimeout(() => {
+//     messEmail
+// }, 1500)
